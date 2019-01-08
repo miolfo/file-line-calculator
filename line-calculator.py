@@ -10,8 +10,12 @@ def calculate_lines(path):
     return linecount
 
 def get_lines_in_file(path, file_name):
-    #TODO: Fix crashes if non-plaintext files are here
-    return sum(1 for line in open(os.path.join(path, file_name)))
+    with open(os.path.join(path, file_name)) as file:
+        try:
+            lines = file.readlines()
+            return len(lines)
+        except UnicodeDecodeError:
+            return 0
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
